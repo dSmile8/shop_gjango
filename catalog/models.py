@@ -8,7 +8,7 @@ class Category(models.Model):
     description = models.TextField(verbose_name='Описание')
 
     class Meta:
-        verbose_name = 'Категория'
+        verbose_name = 'Категорию'
         verbose_name_plural = 'Категории'
 
     def __str__(self):
