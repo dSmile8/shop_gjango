@@ -11,7 +11,8 @@ class Command(BaseCommand):
             data = json.load(f)
             categories_list = []
             for i in data:
-                categories_list.append(i)
+                if i['model'] == 'catalog.category':
+                    categories_list.append(i)
             return categories_list
 
     @staticmethod
@@ -20,7 +21,8 @@ class Command(BaseCommand):
             data = json.load(f)
             products_list = []
             for i in data:
-                products_list.append(i)
+                if i['model'] == 'catalog.product':
+                    products_list.append(i)
             return products_list
 
     def handle(self, *args, **options):
@@ -32,7 +34,7 @@ class Command(BaseCommand):
         # Обходим все значения категорий из фиктсуры для получения информации об одном объекте
         for category in Command.json_read_categories():
             category_for_create.append(
-                Category(id=category["pk"],
+                Category(id=category['pk'],
                          name=category['fields']['name'],
                          description=category['fields']['description'])
             )
@@ -47,8 +49,10 @@ class Command(BaseCommand):
                         category=Category.objects.get(pk=product["fields"]["category"]),
                         name=product["fields"]["name"],
                         price=product["fields"]["price"],
-                        description=product["fields"]["description"])
-                        )
+                        description=product["fields"]["description"],
+                        created_at=product['fields']['created_at'],
+                        updated_at=product['fields']['updated_at'], )
+            )
 
-            # Создаем объекты в базе с помощью метода bulk_create()
-            Product.objects.bulk_create(product_for_create)
+            #     # Создаем объекты в базе с помощью метода bulk_create()
+        Product.objects.bulk_create(product_for_create)
