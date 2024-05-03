@@ -11,7 +11,7 @@ class Command(BaseCommand):
             data = json.load(f)
             categories_list = []
             for i in data:
-                if i['model'] == 'catalog.category':
+                if i['model'] == 'catalog1.category':
                     categories_list.append(i)
             return categories_list
 
@@ -21,7 +21,7 @@ class Command(BaseCommand):
             data = json.load(f)
             products_list = []
             for i in data:
-                if i['model'] == 'catalog.product':
+                if i['model'] == 'catalog1.product':
                     products_list.append(i)
             return products_list
 
