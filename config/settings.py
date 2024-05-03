@@ -78,10 +78,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": 'your_db',
+        "NAME": 'my_shop',
         'HOST': 'localhost',
-        'USER': 'user',
-        'PASSWORD': 'password',
+        'USER': 'postgres',
+        'PASSWORD': 'your_pswd',
     }
 }
 
@@ -121,6 +121,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+
+STATICFILES_DIRS = (BASE_DIR / "static",)
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
