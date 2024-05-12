@@ -1,27 +1,32 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import HttpResponseRedirect
+from django.urls import reverse
+from django.views.generic import ListView, DetailView, TemplateView
+
 from catalog.models import Product
 
 
-def contacts(requests):
-    if requests.method == 'POST':
-        name = requests.POST.get('name')
-        phone = requests.POST.get('phone')
-        message = requests.POST.get('message')
+class ContactsTemplateView(TemplateView):
+    template_name = 'catalog/contacts.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Контакты'
+        return context
+
+    def post(self, request, *args, **kwargs):
+        name = request.POST.get('name')
+        phone = request.POST.get('phone')
+        message = request.POST.get('message')
         print(f'{name} / {phone} / {message}')
         data = f'Name: {name}. Phone: {phone}. Message: {message}\n'
         with open('user_data.txt', 'a', encoding='UTF-8') as f:
             f.write(data)
-    return render(requests, 'catalog/contacts.html')
+        return HttpResponseRedirect(reverse('catalog:contacts'))
 
 
-def products_list(requests):
-    products = Product.objects.all()
-    context = {'products': products}
-    return render(requests, 'catalog/products_list.html', context)
+class ProductListView(ListView):
+    model = Product
 
 
-def product_info(requests, pk):
-    product = get_object_or_404(Product, pk=pk)
-    # product = Product.objects.get(pk=pk)
-    context = {'product': product}
-    return render(requests, 'catalog/product_info.html', context)
+class ProductDetailView(DetailView):
+    model = Product

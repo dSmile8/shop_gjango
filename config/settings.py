@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
 
-    'catalog',
+    'catalog', 'bloging',
 ]
 
 MIDDLEWARE = [
@@ -78,10 +78,10 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": 'my_shop',
-        'HOST': 'localhost',
-        'USER': 'postgres',
-        'PASSWORD': 'your_pswd',
+        "NAME": 'my_shop',  # Введите свои данные/настройки
+        'HOST': 'localhost',  # Введите свои данные/настройки
+        'USER': 'postgres',  # Введите свои данные/настройки
+        'PASSWORD': 'your_password',  # Введите свои данные/настройки
     }
 }
 
