@@ -5,19 +5,19 @@
         <div class="col-4 offset-md-4">
             <div class="card mb-4 box-shadow border-dark h-100">
                 <div class="card text-bg-dark border-dark mb-2 h-100" style="max-width: 30rem;">
-                    <h4 class="my-0 font-weight-normal">{{ product.name }}</h4>
+                    <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
                 </div>
                 <div class="card-body">
-                    <h1 class="card-title pricing-card-title">{{ product.price }} руб.</h1>
+                    <h1 class="card-title pricing-card-title">{{ object.price }} руб.</h1>
                     <img src="{{ product.image | media_filter  }}">
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
-                        <li>{{ product.description}}</li>
+                        <li>{{ object.description}}</li>
                         <p> </p>
-                        <li><b>Жанр:</b> {{ product.category}}</li>
-                        <li><b>Дата выхода:</b> {{ product.created_at}}</li>
+                        <li><b>Жанр:</b> {{ object.category}}</li>
+                        <li><b>Дата выхода:</b> {{ object.created_at}}</li>
                     </ul>
                     <button type="button" class="btn btn-lg btn-block btn-dark">Купить</button>
-                    <a href="{% url 'catalog:products_list'%}" type="button" class="btn btn-lg btn-block btn-outline-dark">Назад</a>
+                    <a href="{% url 'catalog:product_list'%}" type="button" class="btn btn-lg btn-block btn-outline-dark">Назад</a>
                 </div>
             </div>
         </div>
