@@ -8,7 +8,9 @@
                     <h4 class="my-0 font-weight-normal">{{ object.title }} ({{ object.slug }})</h4>
                 </div>
                 <div class="card-body">
+                    {% if object.image %}
                     <img class="card-img-top" src="{{ object.image | media_filter }}">
+                    {% endif %}
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>- {{ object.body }}</li>
                         <p></p>

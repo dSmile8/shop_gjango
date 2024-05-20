@@ -9,11 +9,11 @@ import smtplib
 
 smtp_server = smtplib.SMTP("smtp.yandex.ru", 587)  # Введите свои данные/настройки
 smtp_server.starttls()
-smtp_server.login("your_email@yandex.ru", "your_password")  # Введите свои данные/настройки
+smtp_server.login("sender email", "your password")  # Введите свои данные/настройки
 
 msg = MIMEMultipart()
-msg["From"] = "your_email@yandex.ru"  # Введите свои данные/настройки
-msg["To"] = "recipient_email@yandex.ru"  # Введите свои данные/настройки
+msg["From"] = "sender email"  # Введите свои данные/настройки
+msg["To"] = "recipient email"  # Введите свои данные/настройки
 msg["Subject"] = "Тестовое письмо от Django"  # Введите свои данные/настройки
 
 text = "Привет! Это тестовое письмо, отправленное с помощью Python-Django"
@@ -23,17 +23,21 @@ msg.attach(MIMEText(text, "plain"))
 class BlogListView(ListView):
     model = Blog
 
+    def get_queryset(self, *args, **kwargs):
+        queryset = super().get_queryset().order_by(*args, **kwargs)
+        queryset = queryset.filter(is_published=True)
+        return queryset
+
 
 class BlogDetailView(DetailView):
     model = Blog
-    view_count = 0
 
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
         self.object.view_count += 1
         if self.object.view_count == 100:
             # Введите свои данные/настройки
-            smtp_server.sendmail("your_email@yandex.ru", "recipient_mail", msg.as_string())
+            smtp_server.sendmail("sender email", "recipient email", msg.as_string())
             smtp_server.quit()
         self.object.save()
         return self.object
@@ -41,7 +45,7 @@ class BlogDetailView(DetailView):
 
 class BlogCreateView(CreateView):
     model = Blog
-    fields = ('title', 'body', 'image',)
+    fields = ('title', 'body', 'image', 'is_published',)
     success_url = reverse_lazy('bloging:list')
 
     def form_valid(self, form):
