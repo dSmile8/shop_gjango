@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -78,7 +79,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": 'your_db',  # Введите свои данные/настройки
+        "NAME": 'my_shop',  # Введите свои данные/настройки
         'HOST': 'localhost',  # Введите свои данные/настройки
         'USER': 'postgres',  # Введите свои данные/настройки
         'PASSWORD': 'your_password',  # Введите свои данные/настройки

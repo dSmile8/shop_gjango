@@ -2,22 +2,6 @@ from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
 from bloging.models import Blog
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-
-import smtplib
-
-smtp_server = smtplib.SMTP("smtp.yandex.ru", 587)  # Введите свои данные/настройки
-smtp_server.starttls()
-smtp_server.login("sender email", "your password")  # Введите свои данные/настройки
-
-msg = MIMEMultipart()
-msg["From"] = "sender email"  # Введите свои данные/настройки
-msg["To"] = "recipient email"  # Введите свои данные/настройки
-msg["Subject"] = "Тестовое письмо от Django"  # Введите свои данные/настройки
-
-text = "Привет! Это тестовое письмо, отправленное с помощью Python-Django"
-msg.attach(MIMEText(text, "plain"))
 
 
 class BlogListView(ListView):
@@ -35,10 +19,6 @@ class BlogDetailView(DetailView):
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
         self.object.view_count += 1
-        if self.object.view_count == 100:
-            # Введите свои данные/настройки
-            smtp_server.sendmail("sender email", "recipient email", msg.as_string())
-            smtp_server.quit()
         self.object.save()
         return self.object
 
