@@ -15,9 +15,12 @@
                         <p> </p>
                         <li><b>Жанр:</b> {{ object.category}}</li>
                         <li><b>Дата выхода:</b> {{ object.created_at}}</li>
+
                     </ul>
                     <button type="button" class="btn btn-lg btn-block btn-dark">Купить</button>
                     <a href="{% url 'catalog:product_list'%}" type="button" class="btn btn-lg btn-block btn-outline-dark">Назад</a>
+                    <a href="{% url 'catalog:product_update' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-dark">Редактировать</a>
+                    <a href="{% url 'catalog:product_delete' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-dark">Удалить</a>
                 </div>
             </div>
         </div>
