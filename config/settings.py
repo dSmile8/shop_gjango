@@ -131,3 +131,10 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+
+EMAIL_HOST = "smtp.yandex.ru"  # Введите свои данные/настройки
+EMAIL_PORT = 587  # Введите свои данные/настройки
+EMAIL_HOST_USER = 'dsmile-python@yandex.ru'  # Введите свои данные/настройки
+EMAIL_HOST_PASSWORD = 'your password'  # Введите свои данные/настройки
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL : Использование неявного TLS-безопасного подключения.
