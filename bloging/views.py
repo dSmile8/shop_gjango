@@ -1,3 +1,4 @@
+from django.core.mail import send_mail
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from pytils.translit import slugify
@@ -19,6 +20,16 @@ class BlogDetailView(DetailView):
     def get_object(self, queryset=None):
         self.object = super().get_object(queryset)
         self.object.view_count += 1
+        if self.object.view_count == 100:
+            send_mail(
+                'Письмо от сайта GamePro',
+                f'Поздравляем, отзыв "{self.object.title}" набрал 100 просмотров\n'
+                f'Текст отзыва: {self.object.body} ',
+                'dsmile-python@yandex.ru',
+                ['Simpson6515@yandex.ru'],
+                fail_silently=False,
+            )
+
         self.object.save()
         return self.object
 

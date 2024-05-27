@@ -90,7 +90,7 @@ class ProductListView(ListView):
             if active_versions:
                 product.active_version = active_versions.last().version_number
             else:
-                product.active_version = 'Нет активной версии'
+                product.active_version = None
 
         context_data['object_list'] = products
         return context_data
