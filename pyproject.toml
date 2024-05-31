@@ -8,13 +8,13 @@ packages = [{include = "shop_gjango"}]
 
 [tool.poetry.dependencies]
 python = "^3.11"
-django = "^5.0.4"
 flake8 = "^7.0.0"
 psycopg2 = "^2.9.9"
 pillow = "^10.3.0"
 ipython = "^8.24.0"
 slugify = "^0.0.1"
 pytils = "^0.4.1"
+django = "4.2"
 
 
 [build-system]
