@@ -35,9 +35,14 @@ class ProductForm(StyleFormMixin, ModelForm):
                 raise forms.ValidationError('запрещенные слова в описании')
         return cleaned_data
 
+class ModeratorProductForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Product
+        fields = ('name', 'description', 'image', 'price', 'category',)
+
 
 class VersionForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Version
-        fields = '__all__'
+        fields = ('version_number', 'version_name', 'is_current')
 
