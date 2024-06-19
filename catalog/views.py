@@ -7,6 +7,7 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 
 from catalog.forms import ProductForm, VersionForm, ModeratorProductForm
 from catalog.models import Product, Version
+from catalog.services.services import get_category_from_cache, get_product_from_cache
 
 
 class ContactsTemplateView(TemplateView):
@@ -84,7 +85,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         if user == self.object.user or user.is_superuser:
             return ProductForm
         if user.has_perm('catalog.set_published_status') and user.has_perm(
-            'catalog.change_description') and user.has_perm('catalog.change_category'):
+                'catalog.change_description') and user.has_perm('catalog.change_category'):
             return ModeratorProductForm
         raise PermissionDenied
 
@@ -98,22 +99,16 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 class ProductListView(ListView):
     model = Product
 
-    def get_context_data(self, **kwargs):
+    def get_queryset(self, *args, **kwargs):
+        queryset = get_product_from_cache()
+        category_id = self.kwargs.get('category_id')
+        return queryset.filter(category_id=category_id) if category_id else queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
         context_data = super().get_context_data(**kwargs)
-        products = Product.objects.all()
-
-        for product in products:
-            versions = Version.objects.filter(product=product)
-            active_versions = versions.filter(is_current=True)
-            if active_versions:
-                product.active_version = active_versions.last().version_number
-            else:
-                product.active_version = None
-
-        context_data['object_list'] = products
+        context_data['categories'] = get_category_from_cache()
         return context_data
 
 
 class ProductDetailView(DetailView):
     model = Product
-
