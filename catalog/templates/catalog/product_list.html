@@ -1,6 +1,20 @@
 {% extends 'catalog/home.html' %}
 {% load my_tags %}
 {% block content %}
+<div class="row">
+    <div class="col-lg-2">
+        {% for category in categories %}
+        <div class="list-group">
+            <a href="{% url 'catalog:category' category.pk %}"
+               class="list-group list-group-item-action">{{ category.name }}</a>
+        </div>
+        {% endfor %}
+        <hr>
+        <div class="list-group">
+            <a href="{% url 'catalog:product_list' %}" class="list-group list-group-item-action">Сбросить фильтр</a>
+        </div>
+    </div>
+    <div class="col-lg-10">
 <div class="row text-center">
         {% for product in object_list %}
         <div class="col-3">
@@ -15,16 +29,18 @@
                     <ul class="list-unstyled mt-3 mb-4 text-start m-3">
                         <li>{{ product.description|slice:90 }}</li>
                     </ul>
-                    {% if product.active_version %}
-                    <h6> Версия: {{ product.active_version}}</h6>
+                    {% for status in product.version_set.all %}
+                    {% if status.is_current %}
+                    <p> Номер версии:<strong> {{ status.version_number }} </strong></p>
                     {% endif %}
-
-
+                    {% endfor %}
                     <a href="{% url 'catalog:product_info' product.pk  %}" type="button" class="btn btn-lg btn-block btn-outline-dark">Подробнее</a>
                     <button type="button" class="btn btn-lg btn-block btn-dark">Купить</button>
                 </div>
             </div>
         </div>
+
+
         {% endfor %}
     </div>
 {% endblock %}
